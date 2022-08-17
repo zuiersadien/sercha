@@ -1,0 +1,21 @@
+Ext.define('MyApp.store.StoreComun',{
+  extend:'Ext.data.Store',
+  alias:'store.invoices',
+  fields:[
+    'name',{
+      name:'monto_venta',type:'float'
+    },{
+      name:'fecha',type:'date' ,datFormat:'yyyy-MM-dd'
+    }
+  ]
+  ,
+  data:[
+    {
+      name:'pepe',
+      monto_venta:'1231231'
+    },{
+      name:'pepe',
+      monto_venta:'1231231'
+    }
+  ]
+})
