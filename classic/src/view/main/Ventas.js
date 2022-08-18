@@ -2,25 +2,26 @@ Ext.define("MyApp.view.main.Ventas", {
   extend: "Ext.grid.Panel",
   xtype: "ventas",
 
-  requires: ["MyApp.store.ExtraApi"],
+  requires: ["MyApp.store.VentasApi"],
 
   title: "Personnel",
-  iconCls:'x-fa fa-qrcode',
+  iconCls: "x-fa fa-qrcode",
   collapsible: true,
-  tools:[{
-    type:'refresh',
-    tooltip:'Refresh data',
-    handler: function(data) {
-      Ext.Msg.alert('system')
-    }
-  }],
-  tbar:[
+
+  tools: [
     {
-      text:'Add new row',
-      iconCls:'x-fa fa-plus-circle',
-      handler: function( ) {
-        
-       
+      type: "refresh",
+      tooltip: "Refresh data",
+      handler: function (data) {
+        Ext.Msg.alert("system");
+      },
+    },
+  ],
+  tbar: [
+    {
+      text: "Add new row",
+      iconCls: "x-fa fa-plus-circle",
+      handler: function () {
         let form = Ext.create("Ext.form.Panel", {
           itemId: "postForm",
           title: "Nueva venta",
@@ -33,9 +34,9 @@ Ext.define("MyApp.view.main.Ventas", {
             {
               xtype: "textfield",
               flex: 10,
-              
+
               padding: 10,
-              
+
               name: "producto",
               dataIndex: "tra_nom",
 
@@ -46,46 +47,38 @@ Ext.define("MyApp.view.main.Ventas", {
               flex: 10,
               padding: 10,
               name: "cliente",
-              
+
               fieldLabel: "cliente",
             },
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "fecha",
               fieldLabel: "fecha",
             },
             {
-              xtype: 'panel',
-              html: '<div style="width: 100%; height: 40px;background-color:#5fa2dd;display: flex;justify-content:center;align-items:center;font-size:20px;color:white;text-align:center">Detalles</div>'
-            },{
-              xtype: "textfield",
-              flex: 10,
-              padding: 10,
-             
-              name: "detalles",
-              fieldLabel: "detalles",
+              xtype: "panel",
+              html: '<div style="width: 100%; height: 40px;background-color:#5fa2dd;display: flex;justify-content:center;align-items:center;font-size:20px;color:white;text-align:center">Detalles</div>',
             },
+            
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
               name: "unidad",
-              
+
               fieldLabel: "unidad",
             },
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "cantidad",
               fieldLabel: "cantidad",
-            }
-            
-  
+            },
           ],
           buttons: [
             {
@@ -97,36 +90,23 @@ Ext.define("MyApp.view.main.Ventas", {
                   "esta seguro de confirmar esta venta?",
                   function (res) {
                     if (res == "yes") {
-                      function onAddClick  () {
+                      
+
+                      fetch(`http://localhost:7000/tasks/`, {
+                        method: "POST", // or "PUT" with the url changed to, e.g "https://reqres.in/api/users/2"
+                        headers: {
+                          "Content-type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          v_d_pro: data.getForm().getValues().producto,
+                          ven_cli: data.getForm().getValues().cliente,
+                          ven_mon: data.getForm().getValues().fecha,
+                          v_d_uni: data.getForm().getValues().unidad,
+                          v_d_can: data.getForm().getValues().cantidad,
+                          v_d_tot: data.getForm().getValues().cantidad*data.getForm().getValues().unidad,
                           
-                        var view = this.getView(),
-                            rec = new KitchenSink.model.grid.Plant({
-                                common: '',
-                                light: 'Mostly Shady',
-                                price: 0,
-                                availDate: Ext.Date.clearTime(new Date()),
-                                indoor: false
-                            });
-
-                        view.store.insert(0, rec);
-                        console.log(view)
-                        view.findPlugin('cellediting').startEdit(rec, 0);
-                    }
-                    onAddClick()
-
-                      // fetch(`http://localhost:4000/tasks/`, {
-                      //   method: "POST", // or "PUT" with the url changed to, e.g "https://reqres.in/api/users/2"
-                      //   headers: {
-                      //     "Content-type": "application/json",
-                      //   },
-                      //   body: JSON.stringify({
-                      //     "tra_cod": data.getForm().getValues().codigo,
-                      //     "tra_nom": data.getForm().getValues().nombre,
-                      //     "tra_pat": data.getForm().getValues().apellidoP,
-                      //     "tra_mat": data.getForm().getValues().apellidoM,
-                      //     "est_ado": data.getForm().getValues().estado
-                      //     }),
-                      // }).then((res) => window.location.reload());
+                          }),
+                      }).then((res) => window.location.reload());
                     }
                   }
                 );
@@ -146,9 +126,9 @@ Ext.define("MyApp.view.main.Ventas", {
             {
               xtype: "textfield",
               flex: 10,
-              
+
               padding: 10,
-              
+
               name: "producto",
               dataIndex: "tra_nom",
 
@@ -159,26 +139,26 @@ Ext.define("MyApp.view.main.Ventas", {
               flex: 10,
               padding: 10,
               name: "cliente",
-              
+
               fieldLabel: "cliente",
             },
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "monto",
               fieldLabel: "monto",
             },
             {
-              xtype: 'panel',
-              html: '<div style="width: 100%; height: 40px;background-color:#5fa2dd;display: flex;justify-content:center;align-items:center;">hello</div>'
+              xtype: "panel",
+              html: '<div style="width: 100%; height: 40px;background-color:#5fa2dd;display: flex;justify-content:center;align-items:center;">hello</div>',
             },
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "detalles",
               fieldLabel: "detalles",
             },
@@ -187,14 +167,14 @@ Ext.define("MyApp.view.main.Ventas", {
               flex: 10,
               padding: 10,
               name: "unidad",
-              
+
               fieldLabel: "unidad",
             },
             {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "cantidad",
               fieldLabel: "cantidad",
             },
@@ -202,44 +182,12 @@ Ext.define("MyApp.view.main.Ventas", {
               xtype: "textfield",
               flex: 10,
               padding: 10,
-             
+
               name: "total",
               fieldLabel: "total",
             },
-            
-  
           ],
-          buttons: [
-            {
-              text: "crear nuevo trabajador",
-              handler: function (btn) {
-                var data = this.up("form");
-                Ext.Msg.confirm(
-                  "porfavor confirme",
-                  "esta seguro de crear un nuevo trabajador?",
-                  function (res) {
-                    if (res == "yes") {
-                      
-
-                      fetch(`http://localhost:4000/tasks/`, {
-                        method: "POST", // or "PUT" with the url changed to, e.g "https://reqres.in/api/users/2"
-                        headers: {
-                          "Content-type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          "tra_cod": data.getForm().getValues().codigo,
-                          "tra_nom": data.getForm().getValues().nombre,
-                          "tra_pat": data.getForm().getValues().apellidoP,
-                          "tra_mat": data.getForm().getValues().apellidoM,
-                          "est_ado": data.getForm().getValues().estado
-                          }),
-                      }).then((res) => window.location.reload());
-                    }
-                  }
-                );
-              },
-            },
-          ],
+          
         });
         Ext.create("Ext.window.Window", {
           title: "bienvenido",
@@ -249,17 +197,14 @@ Ext.define("MyApp.view.main.Ventas", {
           items: form,
           padding: 10,
         }).show();
-      }
-
+      },
     },
-    {
-      text: 'Add Employee',
-      handler: 'onAddClick'
-  }
+    
   ],
   store: {
-    type: "extraApi",
+    type: "VentasApi",
   },
+
   selModel: {
     type: "checkboxmodel",
     mode: "MULTI",
@@ -272,37 +217,6 @@ Ext.define("MyApp.view.main.Ventas", {
   // },
   columns: [
     {
-      text: "id",
-      dataIndex: "tra_ide",
-    }
-,
-    {
-      text: "producto",
-      dataIndex: "tra_ide",
-    },
-    {
-      text: "cliente",
-      dataIndex: "tra_cod",
-    },
-    {
-      text: "unidad",
-      dataIndex: "tra_cod",
-    },
-    {
-      text: "cantidad",
-      dataIndex: "tra_cod",
-    },
-    {
-      text: "detail",
-      dataIndex: "tra_cod",
-    },
-    {
-      text: "total",
-      dataIndex: "tra_cod",
-    },
-    { text: "fecha", dataIndex: "tra_nom", flex: 1 },
-    
-    {
       xtype: "actioncolumn",
       width: 50,
       items: [
@@ -314,9 +228,9 @@ Ext.define("MyApp.view.main.Ventas", {
             Ext.Msg.confirm("please confirm", "are u sure?", function (res) {
               if (res == "yes") {
                 grid.store.remove(rec);
-                console.log(rec.data.tra_ide);
+                console.log(rec.data.v_d_ide);
 
-                fetch(`http://localhost:4000/tasks/${rec.data.tra_ide}`, {
+                fetch(`http://localhost:7000/tasks/${rec.data.v_d_ide}`, {
                   method: "DELETE",
                 }).then(() => console.log("hola"));
               }
@@ -334,16 +248,16 @@ Ext.define("MyApp.view.main.Ventas", {
           tooltip: "mostrar detalles",
           handler: function (grid, rowindex) {
             let rec = grid.store.getAt(rowindex);
-            Ext.Msg.confirm("please confirm", "are u sure?", function (res) {
-              if (res == "yes") {
-                grid.store.remove(rec);
-                console.log(rec.data.tra_ide);
+            // Ext.Msg.confirm("please confirm", "are u sure?", function (res) {
+            //   if (res == "yes") {
+            //     grid.store.remove(rec);
+            //     console.log(rec.data.tra_ide);
 
-                fetch(`http://localhost:4000/tasks/${rec.data.tra_ide}`, {
-                  method: "DELETE",
-                }).then(() => console.log("hola"));
-              }
-            });
+            //     fetch(`http://localhost:7000/tasks/${rec.data.tra_ide}`, {
+            //       method: "DELETE",
+            //     }).then(() => console.log("hola"));
+            //   }
+            // });
           },
         },
       ],
@@ -358,10 +272,10 @@ Ext.define("MyApp.view.main.Ventas", {
           tooltip: "Press to edit",
           handler: function (grid, rowindex) {
             let rec = grid.store.getAt(rowindex);
-
+                console.log( rec.data)
             let form = Ext.create("Ext.form.Panel", {
               itemId: "postForm",
-              title: "Editar Personal",
+              title: "Editar venta",
 
               url: "someURLGenerated",
               standardSubmit: true,
@@ -371,54 +285,49 @@ Ext.define("MyApp.view.main.Ventas", {
                 {
                   xtype: "textfield",
                   flex: 10,
-                  value: rec.data.tra_ide,
+
                   padding: 10,
-                  disabled: true,
-                  name: "id",
+
+                  name: "producto",
                   dataIndex: "tra_nom",
-
-                  fieldLabel: "ID",
+                  value: rec.data.v_d_pro,
+                  fieldLabel: "producto",
                 },
                 {
                   xtype: "textfield",
                   flex: 10,
                   padding: 10,
-                  name: "codigo",
-                  value: rec.data.tra_cod,
-                  fieldLabel: "Code",
+                  name: "cliente",
+                  value: rec.data.ven_cli,
+                  fieldLabel: "cliente",
                 },
                 {
                   xtype: "textfield",
                   flex: 10,
                   padding: 10,
-                  value: rec.data.tra_nom,
-                  name: "nombre",
-                  fieldLabel: "Nombre",
+                  value: rec.data.ven_mon,
+                  name: "fecha",
+                  fieldLabel: "fecha",
                 },
                 {
-                  xtype: "textfield",
-
-                  flex: 10,
-                  padding: 10,
-                  value: rec.data.tra_pat,
-                  name: "apellidoP",
-                  fieldLabel: "Apellido Paterno",
+                  xtype: "panel",
+                  html: '<div style="width: 100%; height: 40px;background-color:#5fa2dd;display: flex;justify-content:center;align-items:center;font-size:20px;color:white;text-align:center">Detalles</div>',
                 },
                 {
                   xtype: "textfield",
                   flex: 10,
                   padding: 10,
-                  value: rec.data.tra_mat,
-                  name: "apellidoM",
-                  fieldLabel: "Apellido Materno",
+                  name: "unidad",
+                  value: rec.data.v_d_uni,
+                  fieldLabel: "unidad",
                 },
                 {
                   xtype: "textfield",
                   flex: 10,
                   padding: 10,
-                  value: rec.data.est_ado,
-                  name: "estado",
-                  fieldLabel: "estado",
+                  value: rec.data.v_d_can,
+                  name: "cantidad",
+                  fieldLabel: "cantidad",
                 },
               ],
               buttons: [
@@ -434,21 +343,25 @@ Ext.define("MyApp.view.main.Ventas", {
                       function (res) {
                         if (res == "yes") {
                           grid.store.remove(rec);
-                          console.log(rec.data.tra_ide);
+                          console.log(rec.data.v_d_ide);
 
-                          // fetch(`http://localhost:4000/tasks/${rec.data.tra_ide}`, {
-                          //   method: "PUT", // or "PUT" with the url changed to, e.g "https://reqres.in/api/users/2"
-                          //   headers: {
-                          //     "Content-type": "application/json",
-                          //   },
-                          //   body: JSON.stringify({
-                          //     "tra_cod": data.getForm().getValues().codigo,
-                          //     "tra_nom": data.getForm().getValues().nombre,
-                          //     "tra_pat": data.getForm().getValues().apellidoP,
-                          //     "tra_mat": data.getForm().getValues().apellidoM,
-                          //     "est_ado": data.getForm().getValues().estado
-                          //     }),
-                          // }).then((res) => window.location.reload());
+                          fetch(
+                            `http://localhost:7000/tasks/${rec.data.v_d_ide}`,
+                            {
+                              method: "PUT", // or "PUT" with the url changed to, e.g "https://reqres.in/api/users/2"
+                              headers: {
+                                "Content-type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                v_d_pro: data.getForm().getValues().producto,
+                                ven_cli: data.getForm().getValues().cliente,
+                                ven_mon: data.getForm().getValues().fecha,
+                                v_d_uni: data.getForm().getValues().unidad,
+                                v_d_can: data.getForm().getValues().cantidad,
+                                v_d_tot: data.getForm().getValues().cantidad*data.getForm().getValues().unidad,
+                              }),
+                            }
+                          ).then((res) => window.location.reload());
                         }
                       }
                     );
@@ -467,6 +380,41 @@ Ext.define("MyApp.view.main.Ventas", {
           },
         },
       ],
+    },
+    {
+      flex: 1,
+      text: "id",
+      dataIndex: "v_d_ide",
+    },
+    {
+      text: "FECHA",
+      flex: 1,
+      dataIndex: "ven_mon",
+    },
+    {
+      text: "CLIENTE",
+      flex: 1,
+      dataIndex: "ven_cli",
+    },
+    {
+      text: "PRODUCTO",
+      dataIndex: "v_d_pro",
+      flex: 1,
+    },
+    {
+      text: "UNIDAD",
+      dataIndex: "v_d_uni",
+      flex: 1,
+    },
+    {
+      text: "CANTIDAD",
+      dataIndex: "v_d_can",
+      flex: 1,
+    },
+    {
+      text: "TOTAL",
+      dataIndex: "v_d_tot",
+      flex: 1,
     },
   ],
 

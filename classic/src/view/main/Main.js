@@ -59,7 +59,7 @@ Ext.define('MyApp.view.main.Main', {
     },
 
     defaults: {
-        bodyPadding: 20,
+        bodyPadding: 0,
         tabConfig: {
             responsiveConfig: {
                 wide: {
@@ -74,20 +74,36 @@ Ext.define('MyApp.view.main.Main', {
             }
         }
     },
-
+  
+            fullscreen: true,
     items: [{
         title: 'Home',
         iconCls: 'fa-home',
         // The following grid shares a store with the classic version's grid as well!
+        scrollable : {
+            direction     : 'vertical',
+            directionLock : true
+      },
         items: [{
             xtype: 'mainlist'
         }]
     }, {
+        scrollable : {
+            direction     : 'vertical',
+            directionLock : true
+      },
         title: ' Ventas',
         iconCls: 'fa-users',
         // The following grid shares a store with the classic version's grid as well!
+        layout: {
+            type: 'hbox',
+            pack: 'start',
+            align: 'start'
+        },
         items: [{
-            xtype: 'ventas'
+           
+            xtype: 'ventas',
+flex:1          
         }]
     }, {
         title: 'Groups',

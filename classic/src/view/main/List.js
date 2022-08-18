@@ -25,7 +25,7 @@ Ext.define("MyApp.view.main.List", {
        
         let form = Ext.create("Ext.form.Panel", {
           itemId: "postForm",
-          title: "Editar Personal",
+          title: "crear Personal",
 
           url: "someURLGenerated",
           standardSubmit: true,
@@ -161,7 +161,15 @@ Ext.define("MyApp.view.main.List", {
     { text: "Nombre", dataIndex: "tra_nom", flex: 1 },
     { text: "Apellido Paterno", dataIndex: "tra_pat", flex: 1 },
     { text: "Apellido Materno", dataIndex: "tra_mat", flex: 1 },
-    { text: "Activo", dataIndex: "est_ado", flex: 1 },
+    { text: "Activo", dataIndex: "est_ado", flex: 1 ,renderer:function (name,record,meta){
+      if(name===1){
+        name="yes"
+        return name
+      }else{
+        name="no"
+      }
+      return name
+    } },
     {
       xtype: "actioncolumn",
       width: 50,
@@ -191,7 +199,7 @@ Ext.define("MyApp.view.main.List", {
 
       items: [
         {
-          iconCls: "x-fa fa-home",
+          iconCls: "x-fa fa-pen",
           tooltip: "Press to edit",
           handler: function (grid, rowindex) {
             let rec = grid.store.getAt(rowindex);
